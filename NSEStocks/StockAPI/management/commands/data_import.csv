@@ -7,7 +7,7 @@ from io import StringIO
 class Command(BaseCommand):
     def handle(self, *args, **options):
         # Download CSV data
-        url = "https://www.nseindia.com/reports-indices-historical-index-data"
+        url = 'https://www.nseindia.com/reports-indices-historical-index-data'
         response = requests.get(url)
         
         # Parse CSV data
