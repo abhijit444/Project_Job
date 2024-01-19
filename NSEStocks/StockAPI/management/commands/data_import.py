@@ -48,3 +48,5 @@ class Command(BaseCommand):
                         )
 
                 logger.info(f"Data import from file {filename} completed successfully.")
+
+
