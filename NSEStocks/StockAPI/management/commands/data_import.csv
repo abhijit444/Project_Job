@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from stocks.models import indexes, DailyPrices
+from StockAPI.models import indexes, DailyPrices
 import pandas as pd
 import requests
 from io import StringIO

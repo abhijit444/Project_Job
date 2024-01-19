@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Index, DailyPrice
+from .models import Indexes, DailyPrices
 
 class IndexesSerializer(serializers.ModelSerializer):
     class Meta:
