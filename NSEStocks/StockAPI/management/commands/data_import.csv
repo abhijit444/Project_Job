@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from StockAPI.models import indexes, DailyPrices
+from StockAPI.models import Indexes, DailyPrices
 import pandas as pd
 import requests
 from io import StringIO
@@ -16,7 +16,7 @@ class Command(BaseCommand):
         
         # Create indexes and daily prices
         for index_name, group in df.groupby('Index'):
-            index = indexes.objects.create(name=index_name)
+            index = Indexes.objects.create(name=index_name)
             for _, row in group.iterrows():
                 DailyPrices.objects.create(
                     index=index,
