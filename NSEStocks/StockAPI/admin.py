@@ -46,6 +46,15 @@ class DailyPricesAdmin(admin.ModelAdmin):
 
     import_csv.short_description = 'Import data from CSV file'
 
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+        custom_actions = {
+            'export_csv': (self.export_csv, 'export_csv', 'Export selected daily prices to CSV'),
+            'import_csv': (self.import_csv, 'import_csv', 'Import data from CSV file'),
+        }
+        actions.update(custom_actions)
+        return actions
+
 class IndexesAdmin(admin.ModelAdmin):
     list_display = ['name', 'csv_file']
 
