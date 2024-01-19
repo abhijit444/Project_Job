@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from stockAPI.views import IndexesViewSet, DailyPricesViewSet
+from StockAPI.views import IndexesViewSet, DailyPricesViewSet
 
 router = DefaultRouter()
 router.register(r'indexes', IndexesViewSet)
