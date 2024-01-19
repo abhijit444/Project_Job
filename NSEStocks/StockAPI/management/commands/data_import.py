@@ -1,3 +1,4 @@
+# management/commands/import_nse_data.py
 from django.core.management.base import BaseCommand
 from StockAPI.models import Indexes, DailyPrices
 import pandas as pd
@@ -33,7 +34,7 @@ class Command(BaseCommand):
             return
 
         # Create indexes and daily prices
-        for index_name, group in df.groupby('Index'):
+        for index_name, group in df.groupby('Indexes'):
             index = Indexes.objects.get_or_create(name=index_name)[0]
             for _, row in group.iterrows():
                 DailyPrices.objects.create(
@@ -48,4 +49,3 @@ class Command(BaseCommand):
                 )
 
         logger.info("Data import completed successfully.")
-
