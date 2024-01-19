@@ -1,0 +1,30 @@
+from django.core.management.base import BaseCommand
+from stocks.models import indexes, DailyPrices
+import pandas as pd
+import requests
+from io import StringIO
+
+class Command(BaseCommand):
+    def handle(self, *args, **options):
+        # Download CSV data
+        url = "https://www.nseindia.com/reports-indices-historical-index-data"
+        response = requests.get(url)
+        
+        # Parse CSV data
+        csv_data = StringIO(response.text)
+        df = pd.read_csv(csv_data)
+        
+        # Create indexes and daily prices
+        for index_name, group in df.groupby('Index'):
+            index = indexes.objects.create(name=index_name)
+            for _, row in group.iterrows():
+                DailyPrices.objects.create(
+                    index=index,
+                    date=row['Date'],
+                    open_price=row['Open'],
+                    high_price=row['High'],
+                    low_price=row['Low'],
+                    close_price=row['Close'],
+                    shares_traded=row['Shares Traded'],
+                    turnover=row['Turnover'],
+                )
