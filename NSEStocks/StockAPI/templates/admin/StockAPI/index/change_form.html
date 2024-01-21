@@ -1,0 +1,17 @@
+{% extends "admin/change_form.html" %}
+
+{% block content %}
+    {{ block.super }}
+    <div id="csv-files">
+        {{ original|admin_actions }}
+        {{ form.media }}
+        {{ inline_admin_formset.media }}
+        {{ inline_admin_formset.formset.management_form }}
+        {{ inline_admin_formset.formset.non_form_errors }}
+        {{ inline_admin_formset.formset.management_form }}
+        {% for formset_form in inline_admin_formset.formset %}
+            {{ formset_form }}
+            {{ formset_form.management_form }}
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,39 @@
+import csv
+from django.core.management.base import BaseCommand
+from StockAPI.models import DailyPrice
+
+class Command(BaseCommand):
+    help = 'Export daily prices data to a CSV file'
+
+    def handle(self, *args, **kwargs):
+        # Specify the path where you want to save the CSV file
+        csv_file_path = 'C:/Users/avina/Desktop/export_data/EXPORTED_DATA.csv'
+
+        # Get all daily prices
+        daily_prices = DailyPrice.objects.all()
+
+        # Define the CSV header
+        field_names = ['index', 'date', 'open_price', 'high_price', 'low_price', 'close_price', 'shares_traded', 'turnover']
+
+        # Open the CSV file for writing
+        with open(csv_file_path, 'w', newline='') as csv_file:
+            writer = csv.DictWriter(csv_file, fieldnames=field_names)
+            
+            # Write the header to the CSV file
+            writer.writeheader()
+
+            # Write the data to the CSV file
+            for daily_price in daily_prices:
+                writer.writerow({
+                    'index': daily_price.index.name,
+                    'date': daily_price.date,
+                    'open_price': daily_price.open_price,
+                    'high_price': daily_price.high_price,
+                    'low_price': daily_price.low_price,
+                    'close_price': daily_price.close_price,
+                    'shares_traded': daily_price.shares_traded,
+                    'turnover': daily_price.turnover,
+                })
+
+        self.stdout.write(self.style.SUCCESS(f'Data exported to {csv_file_path}'))
+

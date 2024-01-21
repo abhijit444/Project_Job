@@ -1,12 +1,13 @@
 from rest_framework import serializers
-from .models import Indexes, DailyPrices
+from .models import Index, DailyPrice
 
-class IndexesSerializer(serializers.ModelSerializer):
+class DailyPriceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Indexes
+        model = DailyPrice
         fields = '__all__'
 
-class DailyPricesSerializer(serializers.ModelSerializer):
+class IndexSerializer(serializers.ModelSerializer):
     class Meta:
-        model = DailyPrices
+        model = Index
         fields = '__all__'
+        

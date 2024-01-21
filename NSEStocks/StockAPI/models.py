@@ -1,16 +1,31 @@
+# models.py
+# models.py
 from django.db import models
 
-class Indexes(models.Model):
-    name = models.CharField(max_length=100)
-    csv_file = models.FileField(upload_to='indexes_csv/', null=True, blank=True)
+class Index(models.Model):
+    name = models.CharField(max_length=255)
 
-class DailyPrices(models.Model):
-    index = models.ForeignKey(Indexes, on_delete=models.CASCADE, related_name='daily_prices')
+    def __str__(self):
+        return self.name
+
+class DailyPrice(models.Model):
+    index = models.ForeignKey(Index, on_delete=models.CASCADE, related_name='daily_prices')
     date = models.DateField()
-    open_price = models.FloatField()
-    high_price = models.FloatField()
-    low_price = models.FloatField()
-    close_price = models.FloatField()
-    shares_traded = models.IntegerField()
-    turnover = models.FloatField()
-    csv_file = models.FileField(upload_to='daily_prices_csv/', null=True, blank=True)
+    open_price = models.DecimalField(max_digits=10, decimal_places=2)
+    high_price = models.DecimalField(max_digits=10, decimal_places=2)
+    low_price = models.DecimalField(max_digits=10, decimal_places=2)
+    close_price = models.DecimalField(max_digits=10, decimal_places=2)
+    shares_traded = models.BigIntegerField()
+    turnover = models.DecimalField(max_digits=15, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.index.name} - {self.date}"
+
+class CSVFile(models.Model):
+    index = models.ForeignKey(Index, on_delete=models.CASCADE, related_name='csv_files')
+    file = models.FileField(upload_to='csv_files/')
+
+    def __str__(self):
+        return f"{self.index.name} - {self.file.name}"
+
+

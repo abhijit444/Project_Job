@@ -1,0 +1,14 @@
+<!-- templates/your_app/index_detail.html -->
+<h1>{{ index.name }}</h1>
+
+<ul>
+  {% for csv_file in csv_files %}
+    <li>{{ csv_file.file.name }} - <a href="{% url 'delete-csv' csv_file.id %}">Delete</a></li>
+  {% endfor %}
+</ul>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Upload CSV</button>
+</form>
